@@ -9,7 +9,6 @@ public class Tests : PageTest
     [SetUp]
     public async Task Setup()
     {
-        
         await Page.GotoAsync("https://app-planningregister-planningportal.pp.tqinfra.co.uk/simple-search");
     }
 
