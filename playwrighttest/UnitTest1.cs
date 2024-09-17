@@ -1,30 +1,22 @@
+using System.Text.RegularExpressions;
 using Microsoft.Playwright;
+using Microsoft.Playwright.NUnit;
 
 namespace playwrighttest;
 
-public class Tests
+public class Tests : PageTest
 {
     [SetUp]
-    public void Setup()
+    public async Task Setup()
     {
+        
+        await Page.GotoAsync("https://app-planningregister-planningportal.pp.tqinfra.co.uk/simple-search");
     }
 
     [Test]
-    public async Task Test1()
+    public async Task AdvancedSearch() 
     {
-        //Playwright
-        using var playwright = await Playwright.CreateAsync();
-        //Choose Browser
-        await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-        {
-            Headless = false
-        });
-
-        //Now website
-        var page = await browser.NewPageAsync();
-        //await page.GotoAsync("www.bbc.co.uk");
-        await page.GotoAsync("https://app-planningregister-planningportal.pp.tqinfra.co.uk/simple-search");
-        //await Expect(page).
-        
+        await Expect(Page).ToHaveTitleAsync(new Regex("Northern Ireland Public Register"));
+        await Page.ClickAsync(selector:"text=Advanced search");
     }
 }
